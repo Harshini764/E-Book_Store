@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-Bookstore</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #2d3e50 60%, #4b79a1 100%);
+            padding: 18px 0;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: color 0.2s;
+        }
+        .navbar a:hover {
+            color: #ffd700;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            background: rgba(255,255,255,0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+            padding: 40px 30px 30px 30px;
+        }
+        .main-title {
+            text-align: center;
+            font-size: 2.8em;
+            font-weight: bold;
+            color: #2d3e50;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #4b79a1;
+            font-size: 1.2em;
+            margin-bottom: 35px;
+        }
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 30px;
+        }
+        .book-card {
+            background: linear-gradient(135deg, #f8fafc 60%, #e0eafc 100%);
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(44,62,80,0.08);
+            padding: 24px 18px 18px 18px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            min-height: 260px;
+            position: relative;
+        }
+        .book-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 8px 32px rgba(44,62,80,0.18);
+            background: linear-gradient(135deg, #e0eafc 60%, #cfdef3 100%);
+        }
+        .book-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #2d3e50;
+            margin-bottom: 6px;
+        }
+        .book-author {
+            color: #4b79a1;
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+        .book-description {
+            color: #555;
+            font-size: 0.98em;
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+        .book-price {
+            color: #388e3c;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 12px;
+        }
+        .add-cart-btn {
+            background: linear-gradient(90deg, #388e3c 60%, #4b79a1 100%);
+            color: #fff;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 6px rgba(44,62,80,0.08);
+            align-self: flex-end;
+        }
+        .add-cart-btn:hover {
+            background: linear-gradient(90deg, #256029 60%, #2d3e50 100%);
+            box-shadow: 0 4px 16px rgba(44,62,80,0.18);
+        }
+        @media (max-width: 700px) {
+            .container {
+                padding: 18px 4px;
+            }
+            .main-title {
+                font-size: 2em;
+            }
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/admin/">Admin Panel</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'cart' %}">View Cart</a>
+    </div>
+    <div class="container">
+        {% if messages %}
+            <ul style="list-style:none; padding:0; max-width: 600px; margin: 20px auto;">
+                {% for message in messages %}
+                    <li style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; padding: 12px 20px; margin-bottom: 10px; font-weight: bold;">
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="main-title">E-Bookstore</div>
+        <div class="subtitle">Explore our collection of books!</div>
+        <form method="get" action="" style="text-align:center; margin-bottom:30px;">
+            <input type="text" name="q" placeholder="Search books..." value="{{ request.GET.q }}" style="padding:8px; width:220px; border-radius:5px; border:1px solid #ccc;">
+            <button type="submit" style="padding:8px 16px; border-radius:5px; background:#4b79a1; color:#fff; border:none;">Search</button>
+        </form>
+        <div class="books-grid">
+            {% for book in books %}
+                <div class="book-card">
+                    <a class="book-title" href="{% url 'book_detail' book.id %}">{{ book.title }}</a>
+                    <div class="book-author">by {{ book.author }}</div>
+                    <div class="book-description">{{ book.description }}</div>
+                    <div class="book-price">Price: ₹{{ book.price }}</div>
+                    <a class="add-cart-btn" href="{% url 'add_to_cart' book.id %}">Add to Cart</a>
+                </div>
+            {% empty %}
+                <div>No books available.</div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

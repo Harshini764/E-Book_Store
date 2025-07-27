@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register - E-Bookstore</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #2d3e50 60%, #4b79a1 100%);
+            padding: 18px 0;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: color 0.2s;
+        }
+        .navbar a:hover {
+            color: #ffd700;
+        }
+        .container {
+            max-width: 400px;
+            margin: 60px auto;
+            background: rgba(255,255,255,0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+            padding: 40px 30px 30px 30px;
+        }
+        h2 {
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: #2d3e50;
+            margin-bottom: 20px;
+            letter-spacing: 1.5px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        input[type="text"], input[type="password"], input[type="email"] {
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        button {
+            background: linear-gradient(90deg, #388e3c 60%, #4b79a1 100%);
+            color: #fff;
+            padding: 12px 0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 6px rgba(44,62,80,0.08);
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #256029 60%, #2d3e50 100%);
+            box-shadow: 0 4px 16px rgba(44,62,80,0.18);
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.95em;
+            color: #4b79a1;
+        }
+        .login-link a {
+            color: #4b79a1;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .login-link a:hover {
+            color: #256029;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/admin/">Admin Panel</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'cart' %}">View Cart</a>
+    </div>
+    <div class="container">
+        <h2>Register</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Register</button>
+        </form>
+        <div class="login-link">
+            <a href="{% url 'login' %}">Already have an account? Login</a>
+        </div>
+    </div>
+</body>
+</html>

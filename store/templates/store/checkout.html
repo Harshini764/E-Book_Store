@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout - E-Bookstore</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #2d3e50 60%, #4b79a1 100%);
+            padding: 18px 0;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: color 0.2s;
+        }
+        .navbar a:hover {
+            color: #ffd700;
+        }
+        .container {
+            max-width: 600px;
+            margin: 60px auto;
+            background: rgba(255,255,255,0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+            padding: 40px 30px 30px 30px;
+            color: #2d3e50;
+        }
+        h2 {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            letter-spacing: 1.5px;
+        }
+        .book-list {
+            margin-bottom: 30px;
+        }
+        .book-item {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        input, textarea {
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background: linear-gradient(90deg, #388e3c 60%, #4b79a1 100%);
+            color: #fff;
+            padding: 12px 0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 6px rgba(44,62,80,0.08);
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #256029 60%, #2d3e50 100%);
+            box-shadow: 0 4px 16px rgba(44,62,80,0.18);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/admin/">Admin Panel</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'cart' %}">View Cart</a>
+    </div>
+    <div class="container">
+        <h2>Checkout</h2>
+        <div class="book-list">
+            <h3>Books in your cart:</h3>
+            {% for book in books %}
+                <div class="book-item">{{ book.title }} by {{ book.author }} - ₹{{ book.price }}</div>
+            {% empty %}
+                <div>Your cart is empty.</div>
+            {% endfor %}
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+            <label for="address">Address</label>
+            <textarea id="address" name="address" rows="4" required></textarea>
+            <label for="payment">Payment Details</label>
+            <input type="text" id="payment" name="payment" placeholder="Card number, etc." required>
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+</body>
+</html>

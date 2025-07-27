@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ book.title }} - Details</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #2d3e50 60%, #4b79a1 100%);
+            padding: 18px 0;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: color 0.2s;
+        }
+        .navbar a:hover {
+            color: #ffd700;
+        }
+        .container {
+            max-width: 700px;
+            margin: 60px auto;
+            background: rgba(255,255,255,0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+            padding: 40px 30px 30px 30px;
+            color: #2d3e50;
+        }
+        h1 {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 1.5px;
+        }
+        h3 {
+            font-size: 1.5em;
+            color: #4b79a1;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #388e3c 60%, #4b79a1 100%);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 6px rgba(44,62,80,0.08);
+            transition: background 0.2s, box-shadow 0.2s;
+            margin-right: 15px;
+        }
+        .btn:hover {
+            background: linear-gradient(90deg, #256029 60%, #2d3e50 100%);
+            box-shadow: 0 4px 16px rgba(44,62,80,0.18);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/admin/">Admin Panel</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'cart' %}">View Cart</a>
+    </div>
+    <div class="container">
+        <h1>{{ book.title }}</h1>
+        <h3>by {{ book.author }}</h3>
+        <p>{{ book.description }}</p>
+        <p>Price: ₹{{ book.price }}</p>
+        <a href="{% url 'add_to_cart' book.id %}" class="btn">Add to Cart</a>
+        <a href="{% url 'home' %}" class="btn">Back to Home</a>
+    </div>
+</body>
+</html>
