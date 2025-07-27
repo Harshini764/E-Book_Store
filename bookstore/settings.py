@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!q89ktk*iew=q6he4ii2stp6*bqsx^j@u837ky^k!l2=%rgw+_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['e-book-store-k0fh.onrender.com']
 
 
 # Application definition
